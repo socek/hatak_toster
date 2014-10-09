@@ -27,7 +27,7 @@ class TestDatabase(object):
 
     def recreate_sqlite_database(self):
         try:
-            os.unlink(self.settings['sqlite_db'])
+            os.unlink(self.settings['db:db'])
         except FileNotFoundError:
             pass
 

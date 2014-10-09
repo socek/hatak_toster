@@ -24,7 +24,8 @@ class ControllerPluginTests(TestCase):
     def setUp(self):
         super().setUp()
         self.controller = MagicMock()
-        self.plugin = self.prefix_from(self.controller)
+        self.parent = MagicMock()
+        self.plugin = self.prefix_from(self.parent, self.controller)
 
 
 class ModelTestCase(TestCase):
@@ -38,6 +39,7 @@ class FormTestCase(TestCase):
 
     def setUp(self):
         super().setUp()
+        self.add_mock('CsrfMustMatch', prefix='haplugin.formskit.models.')
         self.form = self.prefix_from(self.request)
 
     def _create_fake_post(self, data):
