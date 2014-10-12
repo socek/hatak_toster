@@ -15,6 +15,7 @@ class TestCase(BaseTestCase):
             'db': MagicMock(),
             'unpacker': self.runner.application.unpacker,
             'settings': {},
+            'paths': {},
         }
         unpack(self, self.request)
 

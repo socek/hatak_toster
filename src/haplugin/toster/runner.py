@@ -10,19 +10,8 @@ class TestRunner(BaseTestRunner):
     def __init__(self, application, fixtures):
         super().__init__()
         self.application = application
-        self.cache = {}
         self.fixtures = fixtures
-
-    def get_settings(self):
-        try:
-            return self.cache['settings']
-        except KeyError:
-            settings, paths = (
-                self.application.get_settings_for_tests(
-                    self.application.module))
-            merged = settings.merged(paths)
-            self.cache['settings'] = merged.to_dict()
-            return self.cache['settings']
+        self.cache = {}
 
     def get_db(self):
         try:
@@ -39,7 +28,7 @@ class TestRunner(BaseTestRunner):
 
     def connect_to_db(self):
         print('Recreating database...')
-        database = TestDatabase(self.get_settings())
+        database = TestDatabase(self.application.settings)
         database.recreate_database()
 
         engine, session = database.get_engine_and_session()
@@ -63,6 +52,6 @@ class TestRunner(BaseTestRunner):
         super().run()
 
     def read_from_yaml_if_able(self):
-        settings = self.get_settings()
-        if self.SETTINGS_KEY in settings:
-            self.manager.add_testcases_from_yaml(settings[self.SETTINGS_KEY])
+        paths = self.application.settings['paths']
+        if self.SETTINGS_KEY in paths:
+            self.manager.add_testcases_from_yaml(paths[self.SETTINGS_KEY])
