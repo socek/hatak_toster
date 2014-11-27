@@ -45,7 +45,7 @@ class FormTestCase(TestCase):
 
     def _create_fake_post(self, data):
         defaults = {
-            self.form.form_name_value: [self.form.name, ]
+            self.form.form_name_value: [self.form.get_name(), ]
         }
         defaults.update(data)
         self.POST.dict_of_lists.return_value = defaults
