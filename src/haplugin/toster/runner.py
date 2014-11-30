@@ -37,7 +37,7 @@ class TestRunner(BaseTestRunner):
         database.create_all(engine)
 
         print('Creating fixtures...')
-        self.fixtures(session)()
+        self.fixtures(session, self.application)()
 
         self.cache['db'] = session
         self.cache['db_engine'] = engine

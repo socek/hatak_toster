@@ -3,9 +3,10 @@ fixtures = {}
 
 class Fixtures(object):
 
-    def __init__(self, db):
+    def __init__(self, db, application):
         self.db = db
         self.fixtures = fixtures
+        self.application = application
 
     def _create(self, cls, **kwargs):
         obj = cls.get_or_create(self.db, **kwargs)
